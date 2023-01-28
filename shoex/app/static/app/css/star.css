@@ -1,0 +1,18 @@
+.stars {
+    display: flex;
+}
+
+.stars label {
+    font-size: 2em;
+    color: #ccc;
+    cursor: pointer;
+}
+
+.stars label:hover,
+.stars label:hover ~ label {
+    color: #ffa500;
+}
+
+.stars input[type='radio'] {
+    display: none;
+}

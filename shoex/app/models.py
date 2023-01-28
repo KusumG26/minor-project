@@ -28,14 +28,19 @@ class cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(productDetail, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
-def __str__(self):
- return str(self.id)
+    def __str__(self):
+     return str(self.id)
+
+    @property
+    def total_cost(self):
+      return self.quantity * self.product.price
 
 STATUS_CHOICES= (
     ('accepted','accepted'),
     ('packed','packed'),
     ('on the way','on the way'),
-    ('cancle','cancle')
+    ('cancle','cancle'),
+    ('Delivered','Delivered')
 ) 
 class orderPlaced(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -44,6 +49,28 @@ class orderPlaced(models.Model):
     quantity = models.PositiveIntegerField(default=1)
     ordered_date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=50,choices=STATUS_CHOICES,default='Pending')
+    @property
+    def total_cost(self):
+      return self.quantity * self.product.price
 
 def __str__(self):
  return str(self.id)
+
+class Comment(models.Model):
+    STATUS=(
+        ('New','New'),
+        ('True','True'),
+        ('False','False'),
+    )
+    product = models.ForeignKey(productDetail, on_delete=models.CASCADE)
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    subject=models.CharField(max_length=50,blank=True)
+    comment=models.CharField(max_length=50,blank=True)
+    rate=models.IntegerField(default=1)
+    ip=models.CharField(max_length=20,blank=True)
+    status=models.CharField(max_length=10,choices=STATUS,null=True)
+    create_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
+
+def __str__(self):
+    return self.subject

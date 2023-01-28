@@ -5,7 +5,8 @@ from .models import (
     customer,
     productDetail,
     cart,
-    orderPlaced
+    orderPlaced,
+    Comment
 )
 @admin.register(customer)
 class customerModelAdmin(admin.ModelAdmin):
@@ -21,3 +22,7 @@ class productDetailModelAdmin(admin.ModelAdmin):
 @admin.register(orderPlaced)
 class orderPlacedModelAdmin(admin.ModelAdmin):
    list_display=['id','quantity','ordered_date','status','customer','product','user']
+
+@admin.register(Comment)
+class commentModelAdmin(admin.ModelAdmin):
+  list_display=['user','product','subject','comment','rate','create_at']

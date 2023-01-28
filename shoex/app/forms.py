@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, User
 from django.contrib.auth.models import User
 from django.utils.translation import gettext, gettext_lazy as _
 from django.contrib.auth import password_validation
-from .models import customer
+from .models import customer, Comment
 class CustomerRegistrationForm(UserCreationForm):
     password1 = forms.CharField(label='password',widget=forms.PasswordInput(attrs={'class':'form-control'}))
     password2 = forms.CharField(label='Confirm Password (again)',widget=forms.PasswordInput(attrs={'class':'form-control'}))
@@ -30,4 +30,11 @@ class CustomerProfileForm(forms.ModelForm):
         widgets = {'name':forms.TextInput(attrs={'class':'form-control'}),'address':forms.TextInput(attrs={'class':'form-control'})}
 
 
+class CommentForm(forms.ModelForm):
+    subject = forms.CharField(max_length=255)
+    comment = forms.CharField(widget=forms.Textarea)
+    rating = forms.IntegerField()
+    class Meta:
+        model = Comment
+        fields = ["subject","comment"]
 

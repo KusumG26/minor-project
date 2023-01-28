@@ -21,25 +21,9 @@ $('#slider1, #slider2, #slider3').owlCarousel({
         }
     }
 })
-// $('.plus-cart').click(function (){
-//     console.log("Plus Clicked")
-//     var id = $(this).attr("pid").toString();
-//     console.log(id)
-//     $.ajax({
-//         type: "GET",
-//         url: "/pluscart/", 
-//         data: {
-//             prod_id: id
-//         },
-//         success: function (data){
-//             console.log(data)
-//             console.log("Success")
-//         }
-//     })
-// })
 
 $('.plus-cart').click(function () {
-    console.log("Plus Clicked")
+    // console.log("Plus Clicked")
     var id = $(this).attr("pid").toString();
     var eml = this.parentNode.children[2]
     $.ajax({
@@ -49,9 +33,47 @@ $('.plus-cart').click(function () {
             prod_id: id
         },
         success: function (data){
-            eml.innerText = data.quantityss
-            console.log(data)
-            console.log("success")
+            eml.innerText = data.quantity
+            document.getElementById("amount").innerText = data.amount
+            document.getElementById("totalamount").innerText = data.totalamount
+        }
+    
+    })
+})
+
+$('.minus-cart').click(function () {
+    // console.log("Plus Clicked")
+    var id = $(this).attr("pid").toString();
+    var eml = this.parentNode.children[2]
+    $.ajax({
+        type: "GET",
+        url: "/minuscart",
+        data: {
+            prod_id: id
+        },
+        success: function (data){
+            eml.innerText = data.quantity
+            document.getElementById("amount").innerText = data.amount
+            document.getElementById("totalamount").innerText = data.totalamount
+        }
+    
+    })
+})
+$('.remove-cart').click(function () {
+    var id = $(this).attr("pid").toString();
+    var eml = this
+    console.log(id)
+    $.ajax({
+        type: "GET",
+        url: "/removecart",
+        data: {
+            prod_id: id
+        },
+        success: function (data){
+            console.log("delete")
+            document.getElementById("amount").innerText = data.amount
+            document.getElementById("totalamount").innerText = data.totalamount
+            eml.parentNode.parentNode.parentNode.parentNode.remove()
         }
     
     })
