@@ -17,6 +17,15 @@
    <button type="submit" class="btn btn-primary shadow px-5 py-2">Add to cart</button>
    </form>
    <a href="{% url 'buy-now' %}" class="btn btn-danger shadow px-5 py-2 ms-4">Buy Now</a>
+   <hr>
+   <h4>Rate this product</h4>
+   <div class="stars" name ="rate" data-rating="1">
+       <span class="star">&nbsp;</span>
+       <span class="star">&nbsp;</span>
+       <span class="star">&nbsp;</span>
+       <span class="star">&nbsp;</span>
+       <span class="star">&nbsp;</span>
+   </div>
    <div class ="col-md-6">
     <h6 class="text-uppercase">Write Your Review</h6>
     {% if messages %}
@@ -29,50 +38,23 @@
     <form class="review-form my-margin" action="/product/addcomment/{{product.id}}" method="post">
         {% csrf_token %}
         <div class="form-group">
-            <input name ="subject" type="text" placeholder="Your Name" class="large-input" />
+            <input name ="subject" type="text" placeholder="subject" class="large-input" />
         </div>
         
         <div class="form-group">
             <textarea name ="comment" class ="input large-input" type="text" placeholder="Your review"></textarea>
         </div>
-            <style>
-                .star{
-                  color: goldenrod;
-                  font-size: 2.0rem;
-                  padding: 0 1rem; /* space out the stars */
-                }
-                .star::before{
-                  content: '\2606';    /* star outline */
-                  cursor: pointer;
-                }
-                .star.rated::before{
-                  /* the style for a selected star */
-                  content: '\2605';  /* filled star */
-                }
-                
-                .stars{
-                    counter-reset: rateme 0;   
-                    font-size: 2.0rem;
-                    font-weight: 900;
-                }
-                .star.rated{
-                    counter-increment: rateme 1;
-                }
-                .stars::after{
-                    content: counter(rateme) '/5';
-                }
-            </style>
-
+           
 
             <!-- alternate codepen version https://codepen.io/mad-d/pen/aJMPWr?editors=0010 -->
-            <h1>Star Rating System</h1>
+            <!-- <h4>Rate this product</h4>
             <div class="stars" name ="rate" data-rating="1">
                 <span class="star">&nbsp;</span>
                 <span class="star">&nbsp;</span>
                 <span class="star">&nbsp;</span>
                 <span class="star">&nbsp;</span>
                 <span class="star">&nbsp;</span>
-            </div>
+            </div> -->
             
             <input type="hidden" name="rating"  id="data-rating-value">
             
@@ -111,9 +93,9 @@
                     document.getElementById('data-rating-value').value = num;
                 }
             </script>
+    
+        <button type="submit" class="btn btn-primary shadow px-5 py-2">Submit</button>
 
-
-        <button class="primary-btn small-btn">Submit</button>
 
     </form>
 
