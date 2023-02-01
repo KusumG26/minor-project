@@ -25,4 +25,4 @@ class orderPlacedModelAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class commentModelAdmin(admin.ModelAdmin):
-  list_display=['user','product','subject','comment','rate','create_at']
+  list_display=['user','product','subject','comment','rating','create_at']

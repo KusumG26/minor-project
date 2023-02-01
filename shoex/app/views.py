@@ -184,20 +184,18 @@ def addcomment(request, id):
     url = request.META.get('HTTP_REFERER')
     if request.method == "POST":
         form = CommentForm(request.POST)
-        if not form.is_valid():
+        if form.is_valid():
             data = Comment()
             data.subject = form.cleaned_data['subject']
             data.comment= form.cleaned_data['comment']
-            #data.rating = form.cleaned_data['rate']
-            data.rating = 5
+            data.rating = form.cleaned_data['rating']
             data.ip = request.META.get('REMOTE_ADDR')
             data.product = productDetail.objects.get(id=id)
-
             current_user = request.user
             data.user = current_user
             data.save()
             messages.success(request, "Your review has been sent. Thank you for your request.")
             return HttpResponseRedirect(url)
         else:
-            print('heheh')
+            print(form.errors)
     return HttpResponseRedirect(url)

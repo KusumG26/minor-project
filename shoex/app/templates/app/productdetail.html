@@ -35,34 +35,84 @@
         <div class="form-group">
             <textarea name ="comment" class ="input large-input" type="text" placeholder="Your review"></textarea>
         </div>
-        <!DOCTYPE html>
-        <html>
-            <html>
-                <head>
-                    <title>Star Rating</title>
-                    <script>
-                        function setStars(value) {
-                            document.querySelectorAll('.stars input').forEach(star => {
-                              star.checked = star.value <= value;
-                            });
-                          }
-                    </script>
-                </head>
-                <body>
-                    <div class="form-group">
-                        <div class="input-rating">
-                            <strong class ="text-uppercase">Your Rating: </strong>
-                            <div class ="stars">
-                                <input type="radio" id="star5" name="rate" value="5" onclick="setStars(this.value)"/><label for="star5"><i class="fas fa-star"></i></label>
-                                <input type="radio" id="star4" name="rate" value="4" onclick="setStars(this.value)"/><label for="star4"><i class="fas fa-star"></i></label>
-                                <input type="radio" id="star3" name="rate" value="3" onclick="setStars(this.value)"/><label for="star3"><i class="fas fa-star"></i></label>
-                                <input type="radio" id="star2" name="rate" value="2" onclick="setStars(this.value)"/><label for="star2"><i class="fas fa-star"></i></label>
-                                <input type="radio" id="star1" name="rate" value="1" onclick="setStars(this.value)"/><label for="star1"><i class="fas fa-star"></i></label>
-                            </div>
-                        </div>
-                    </div>
-                </body>
-            </html>
+            <style>
+                .star{
+                  color: goldenrod;
+                  font-size: 2.0rem;
+                  padding: 0 1rem; /* space out the stars */
+                }
+                .star::before{
+                  content: '\2606';    /* star outline */
+                  cursor: pointer;
+                }
+                .star.rated::before{
+                  /* the style for a selected star */
+                  content: '\2605';  /* filled star */
+                }
+                
+                .stars{
+                    counter-reset: rateme 0;   
+                    font-size: 2.0rem;
+                    font-weight: 900;
+                }
+                .star.rated{
+                    counter-increment: rateme 1;
+                }
+                .stars::after{
+                    content: counter(rateme) '/5';
+                }
+            </style>
+
+
+            <!-- alternate codepen version https://codepen.io/mad-d/pen/aJMPWr?editors=0010 -->
+            <h1>Star Rating System</h1>
+            <div class="stars" name ="rate" data-rating="1">
+                <span class="star">&nbsp;</span>
+                <span class="star">&nbsp;</span>
+                <span class="star">&nbsp;</span>
+                <span class="star">&nbsp;</span>
+                <span class="star">&nbsp;</span>
+            </div>
+            
+            <input type="hidden" name="rating"  id="data-rating-value">
+            
+            <script>
+                
+                //initial setup
+                document.addEventListener('DOMContentLoaded', function(){
+                    let stars = document.querySelectorAll('.star');
+                    stars.forEach(function(star){
+                        star.addEventListener('click', setRating); 
+                    });
+                    
+                    let rating = parseInt(document.querySelector('.stars').getAttribute('data-rating'));
+                    let target = stars[rating - 1];
+                    target.dispatchEvent(new MouseEvent('click'));
+                });
+        
+                function setRating(ev){
+                    let span = ev.currentTarget;
+                    let stars = document.querySelectorAll('.star');
+                    let match = false;
+                    let num = 0;
+                    stars.forEach(function(star, index){
+                        if(match){
+                            star.classList.remove('rated');
+                        }else{
+                            star.classList.add('rated');
+                        }
+                        //are we currently looking at the span that was clicked
+                        if(star === span){
+                            match = true;
+                            num = index + 1;
+                        }
+                    });
+                    document.querySelector('.stars').setAttribute('data-rating', num);
+                    document.getElementById('data-rating-value').value = num;
+                }
+            </script>
+
+
         <button class="primary-btn small-btn">Submit</button>
 
     </form>

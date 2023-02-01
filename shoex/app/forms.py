@@ -36,5 +36,5 @@ class CommentForm(forms.ModelForm):
     rating = forms.IntegerField()
     class Meta:
         model = Comment
-        fields = ["subject","comment"]
+        fields = ["subject","comment","rating"]
 
